@@ -1,5 +1,7 @@
 # Checkly Playwright Helpers
 
+This is a collection of helpers to leverage [Checkly](https://checklyhq.com) <> [Playwright](https://playwright.dev)
+
 ## Installation
 
 ## Getting started
