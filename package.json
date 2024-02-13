@@ -12,8 +12,8 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Checkly Engineering <support@checklyhq.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "29.5.12",
     "@types/node": "^20.11.17",
