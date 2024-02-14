@@ -8,12 +8,12 @@ describe('timings', () => {
       timings () {
         return { total: TIMING }
       }
-    }
+    } as any
 
     expect(responseTime(mockResponse)).toEqual(TIMING)
   })
 
   it('should return null if timings not defined', () => {
-    expect(responseTime({})).toBeNull()
+    expect(responseTime({} as any)).toBeNull()
   })
 })
