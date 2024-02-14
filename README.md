@@ -1,6 +1,9 @@
 # Checkly Playwright Helpers
 
-This is a collection of helpers to leverage [Checkly](https://checklyhq.com) <> [Playwright](https://playwright.dev)
+> [!WARNING]
+> This library is not ready to be used yet, for more information contact support@checklyhq.com
+
+Collection of helpers for [Checkly](https://checklyhq.com) <> [Playwright](https://playwright.dev) implementations
 
 ## Installation
 
