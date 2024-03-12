@@ -1,4 +1,4 @@
-import { responseTime } from '../timings'
+import { getAPIResponseTime } from '../timings'
 
 describe('timings', () => {
   it('should get timings from request', () => {
@@ -10,10 +10,10 @@ describe('timings', () => {
       }
     } as any
 
-    expect(responseTime(mockResponse)).toEqual(TIMING)
+    expect(getAPIResponseTime(mockResponse)).toEqual(TIMING)
   })
 
   it('should return null if timings not defined', () => {
-    expect(responseTime({} as any)).toBeNull()
+    expect(getAPIResponseTime({} as any)).toBeNull()
   })
 })

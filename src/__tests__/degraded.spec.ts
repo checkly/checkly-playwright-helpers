@@ -1,4 +1,5 @@
-import { signalDegraded } from '../degraded'
+import { ErrorCode, Errors } from '../constants'
+import { markCheckAsDegraded } from '../degraded'
 import * as fs from 'fs'
 
 jest.mock('fs', () => ({
@@ -16,7 +17,7 @@ describe('degraded', () => {
     jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false)
     jest.spyOn(fs, 'writeFileSync').mockImplementation()
 
-    signalDegraded(customMessage)
+    markCheckAsDegraded(customMessage)
 
     expect(fs.writeFileSync).toHaveBeenCalledWith('degraded.json', JSON.stringify({
       messages: [customMessage]
@@ -33,8 +34,8 @@ describe('degraded', () => {
     jest.spyOn(fs, 'readFileSync').mockImplementation(() => JSON.stringify({ messages: [customMessage] }))
     jest.spyOn(fs, 'writeFileSync').mockImplementation()
 
-    signalDegraded(customMessage)
-    signalDegraded(extraCustomMessage)
+    markCheckAsDegraded(customMessage)
+    markCheckAsDegraded(extraCustomMessage)
 
     expect(fs.writeFileSync).toHaveBeenCalledTimes(2)
     expect(fs.writeFileSync).toHaveBeenCalledWith('degraded.json', JSON.stringify({
@@ -46,7 +47,7 @@ describe('degraded', () => {
     jest.spyOn(fs, 'existsSync').mockImplementationOnce(() => false)
     jest.spyOn(fs, 'writeFileSync').mockImplementation()
 
-    signalDegraded()
+    markCheckAsDegraded()
 
     expect(fs.writeFileSync).toHaveBeenCalledWith('degraded.json', JSON.stringify({
       messages: []
@@ -55,6 +56,6 @@ describe('degraded', () => {
 
   it('should throw if message is too big', () => {
     const longCustomMessage = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-    expect(() => signalDegraded(longCustomMessage)).toThrow('message is too big')
+    expect(() => markCheckAsDegraded(longCustomMessage)).toThrow(Errors[ErrorCode.MESSAGE_TOO_BIG])
   })
 })
