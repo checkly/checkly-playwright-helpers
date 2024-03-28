@@ -1,21 +1,59 @@
 # Checkly Playwright Helpers
 
-> [!WARNING]
-> This library is not ready to be used yet, for more information contact support@checklyhq.com
-
-Collection of helpers for [Checkly](https://checklyhq.com) <> [Playwright](https://playwright.dev) implementations
+`@checkly/playwright-helpers` is included in runtime 2023.09 and later, this library is only meant to be used within [Checkly](https://checklyhq.com) Multistep and Browser checks.
 
 ## Installation
 
-## Getting started
+`npm i @checkly/playwright-helpers`
 
-## Issues
-Please make sure to respect issue requirements and choose the proper [issue template](https://github.com/checkly/checkly-playwright-helpers/issues/new/choose) when opening an issue. Issues not conforming to the guidelines may be closed.
+## Methods
 
-## Contribution
-Please make sure to read the [Contributing Guide](https://github.com/checkly/checkly-playwright-helpers/blob/main/CONTRIBUTING.md) before making a pull request.
+### markCheckAsDegraded
 
-## License
+Marks a check as degraded if:
 
-[MIT](https://github.com/checkly/checkly-playwright-helpers/blob/main/LICENSE)
+- The check is failing with soft assertions, or
+- The check has no failures
 
+```
+import { markCheckAsDegraded } from '@checkly/playwright-helpers'
+
+test("Checkly Multistep", async ({ request }) => {
+  test.step('Google', () => {
+    const response = await request.get('https://google.com')
+    const data = await response.json()
+
+    if (data.foo.length > 100) {
+      markCheckAsDegraded('Foo is too long.')
+    }
+  })
+})
+```
+
+#### Arguments
+
+- `reason` String (optional). Logged when the method is called. Used to identify which method caused the degradation.
+
+### getAPIResponseTime
+
+Gets the request response time.
+
+```
+import { getAPIResponseTime } from '@checkly/playwright-helpers'
+
+test("Checkly Multistep", async ({ request }) => {
+  test.step('Google', () => {
+    const response = await request.get('https://google.com')
+
+    console.log(getAPIResponseTime(response))
+  })
+})
+```
+
+#### Arguments
+
+- `response` [APIResponse](https://playwright.dev/docs/api/class-apiresponse) (required). A response from a Playwright API request.
+
+## Support
+
+Feel free to reach out to our customer support if you have any questions [support@checklyhq.com](mailto:support@checklyhq.com).
